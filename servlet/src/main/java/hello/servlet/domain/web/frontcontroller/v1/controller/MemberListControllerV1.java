@@ -3,7 +3,6 @@ package hello.servlet.domain.web.frontcontroller.v1.controller;
 import hello.servlet.domain.member.Member;
 import hello.servlet.domain.member.MemberRepository;
 import hello.servlet.domain.web.frontcontroller.v1.ControllerV1;
-import hello.servlet.domain.web.frontcontroller.v2.MyView;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

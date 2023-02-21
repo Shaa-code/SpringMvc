@@ -2,7 +2,7 @@ package hello.servlet.domain.web.frontcontroller.v2.controller;
 
 import hello.servlet.domain.member.Member;
 import hello.servlet.domain.member.MemberRepository;
-import hello.servlet.domain.web.frontcontroller.v2.MyView;
+import hello.servlet.domain.web.frontcontroller.MyView;
 import hello.servlet.domain.web.frontcontroller.v2.ControllerV2;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,6 +25,5 @@ public class MemberSaveControllerV2 implements ControllerV2 {
         request.setAttribute("member",member);
 
         return new MyView("/WEB-INF/views/save-result.jsp");
-
     }
 }
