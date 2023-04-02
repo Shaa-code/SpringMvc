@@ -70,8 +70,8 @@ public class RequestParamController {
     }
 
     @ResponseBody
-    @RequestMapping("model-attribute-v1")
-    public String modelAttributeV1(@ModelAttribute HelloData helloData){
+    @RequestMapping("model-attribute-v2")
+    public String modelAttributeV2(@ModelAttribute HelloData helloData){
         log.info("username={} , age={}", helloData.getUsername(),helloData.getAge());
         log.info("helloData= {}",helloData); // toString()이 @Data에 포함되어 있어서 가능하다.
         return "ok";
