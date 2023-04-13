@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
-public class itemRepository {
+public class ItemRepository {
 
     private static final Map<Long, Item> store = new ConcurrentHashMap<>();
     private static long sequence = 0L;

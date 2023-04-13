@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.*;
 
 class itemRepositoryTest {
 
-    itemRepository itemRepository = new itemRepository();
+    ItemRepository itemRepository = new ItemRepository();
 
     @AfterEach
     void afterEach(){
