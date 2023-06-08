@@ -1,5 +1,6 @@
 package hello.thymeleaf.basic;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,13 @@ import java.util.List;
 @Controller
 @RequestMapping("/basic")
 public class BasicController {
+
+    @Data
+    @AllArgsConstructor
+    static class User{
+        private String username;
+        private int age;
+    }
 
     @GetMapping("text-basic")
     public String textBasic(Model model){
@@ -49,17 +57,6 @@ public class BasicController {
         return "basic/variable";
     }
 
-    @Data
-    static class User{
-
-        private String username;
-        private int age;
-
-        User(String username, int age){
-            this.username = username;
-            this.age = age;
-        }
-    }
 
     @GetMapping("/basic-objects")
     public String basicObject(HttpSession session){
@@ -101,5 +98,53 @@ public class BasicController {
         return "basic/operation";
     }
 
-}
+    @GetMapping("/attribute")
+    public String attribute(){
+        return "basic/attribute";
+    }
 
+    @GetMapping("/each")
+    public String each(Model model) {
+        addUser(model);
+        return "basic/each";
+    }
+
+    @GetMapping("/condition")
+    public String condition(Model model){
+        addUser(model);
+        return "basic/condition";
+    }
+
+    @GetMapping("/comments")
+    public String comment(Model model){
+        model.addAttribute("data","Spring!");
+        return "basic/comment";
+    }
+
+    @GetMapping("/block")
+    public String block(Model model){
+        addUser(model);
+        return "basic/";
+    }
+
+
+    @GetMapping("/javascript")
+    public String javascript(Model model){
+        model.addAttribute("user",new User("userA",10));
+        addUser(model);
+        return "basic/javascript";
+    }
+
+
+    public void addUser(Model model){
+
+        ArrayList<User> list = new ArrayList<>();
+        list.add(new User("userA",10));
+        list.add(new User("userB",20));
+        list.add(new User("userC",30));
+
+        model.addAttribute("users",list);
+    }
+
+
+}
