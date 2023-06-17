@@ -62,7 +62,9 @@ public class ValidationItemControllerV4 {
         // 만약 오류가 없는건 어떻게 처리하지?
 
         Item item = new Item(form.getItemName(),form.getPrice(),form.getQuantity());
+
         Item savedItem = itemRepository.save(item);
+
         redirectAttributes.addAttribute("itemId", savedItem.getId());
         redirectAttributes.addAttribute("status", true);
         return "redirect:/validation/v4/items/{itemId}";
