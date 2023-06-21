@@ -33,7 +33,7 @@ public class SessionManager {
         }
         for (Cookie cookie : cookies) {
             if(cookie.getName().equals(SESSION_COOKIE_NAME)){
-                return sessionStore.get(cookie.getValue());
+                return sessionStore.get(cookie.getValue()); // 객체가 나온다.
             }
         }
         return null;
