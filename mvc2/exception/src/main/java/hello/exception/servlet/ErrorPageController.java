@@ -45,7 +45,7 @@ public class ErrorPageController {
     public ResponseEntity<Map<String, Object>> errorPage500Api(HttpServletRequest request, HttpServletResponse response){
         log.info("API errorPage 500");
 
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new HashMap<>(); //에러에서 순서는 딱히 중요하지 않아 HashMap을 사용한다.
         Exception ex = (Exception) request.getAttribute(ERROR_EXCEPTION);
         result.put("status", request.getAttribute(ERROR_STATUS_CODE));
         result.put("message", ex.getMessage());
