@@ -8,7 +8,6 @@ import org.springframework.core.convert.support.DefaultConversionService;
 
 import static org.assertj.core.api.Assertions.*;
 
-@SpringBootTest
 public class ConversionServiceTest {
 
     @Test
