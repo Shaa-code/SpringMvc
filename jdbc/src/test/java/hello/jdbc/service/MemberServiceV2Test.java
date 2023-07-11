@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import static hello.jdbc.connection.ConnectionConst.*;
@@ -29,6 +30,8 @@ class MemberServiceV2Test {
     public static final String MEMBER_B = "memberB";
     public static final String MEMBER_EX = "ex";
 
+    private Connection
+    private DriverManager
     private DriverManagerDataSource dataSource;
     private MemberRepositoryV2 memberRepository;
     private MemberServiceV2 memberService;
