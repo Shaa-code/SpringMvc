@@ -3,8 +3,13 @@ package hello.jdbc.service;
 
 import hello.jdbc.domain.Member;
 import hello.jdbc.repository.MemberRepositoryV2;
+import hello.jdbc.repository.MemberRepositoryV3;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -18,31 +23,33 @@ import java.sql.SQLException;
 @RequiredArgsConstructor
 public class MemberServiceV3_1 {
 
-    private final DataSource dataSource;
-    private final MemberRepositoryV2 memberRepository;
+//    private final DataSource dataSource;
+    private final PlatformTransactionManager transactionManager;
+    private final MemberRepositoryV3 memberRepository;
 
     public void accountTransfer(String fromId, String toId, int money) throws SQLException {
-        Connection con = dataSource.getConnection();
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
 
         try{
-            con.setAutoCommit(false);
-            businessLogic(con, fromId, toId, money);
-            con.commit();
+            //비즈니스 로직
+            businessLogic(fromId, toId, money);
+            transactionManager.commit(status);
         } catch (Exception e) {
-            con.rollback();
+            transactionManager.rollback(status);
             throw new IllegalStateException(e);
-        } finally {
-            release(con);
         }
-        //커밋, 롤백
+//        finally {
+//            release(con);
+//        }
+        //release도 transactionManager가 알아서 해줌.
     }
 
-      private void businessLogic(Connection con, String fromId, String toId, int money) throws SQLException {
-        Member fromMember = memberRepository.findById(con, fromId);
-        Member toMember = memberRepository.findById(con, toId);
-        memberRepository.update(con, fromId, fromMember.getMoney() - money);
+      private void businessLogic(String fromId, String toId, int money) throws SQLException {
+        Member fromMember = memberRepository.findById(fromId);
+        Member toMember = memberRepository.findById(toId);
+        memberRepository.update(fromId, fromMember.getMoney() - money);
         validation(toMember);
-        memberRepository.update(con, toId, toMember.getMoney() + money);
+        memberRepository.update(toId, toMember.getMoney() + money);
     }
 
     private void release(Connection con) {

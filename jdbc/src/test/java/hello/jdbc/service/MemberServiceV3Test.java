@@ -1,18 +1,16 @@
 package hello.jdbc.service;
 
-import hello.jdbc.connection.DBConnectionUtil;
 import hello.jdbc.domain.Member;
-import hello.jdbc.repository.MemberRepositoryV1;
 import hello.jdbc.repository.MemberRepositoryV2;
+import hello.jdbc.repository.MemberRepositoryV3;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import static hello.jdbc.connection.ConnectionConst.*;
@@ -24,21 +22,23 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * 트랜잭션 - 커넥션 파라미터 전달 방식 동기화
  */
 @Slf4j
-class MemberServiceV2Test {
+class MemberServiceV3Test {
 
     public static final String MEMBER_A = "memberA";
     public static final String MEMBER_B = "memberB";
     public static final String MEMBER_EX = "ex";
 
     private DriverManagerDataSource dataSource;
-    private MemberRepositoryV2 memberRepository;
-    private MemberServiceV2 memberService;
+    private MemberRepositoryV3 memberRepository;
+    private MemberServiceV3_1 memberService;
 
     @BeforeEach
     void before(){
+//        memberService = new MemberServiceV3_1(dataSource, memberRepository); // 더 이상 DataSource를 주입받아 쓰지 않는다.
         dataSource = new DriverManagerDataSource(URL, USERNAME, PASSWORD);
-        memberRepository = new MemberRepositoryV2(dataSource);
-        memberService = new MemberServiceV2(dataSource, memberRepository);
+        memberRepository = new MemberRepositoryV3(dataSource);
+        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager(dataSource);
+        memberService = new MemberServiceV3_1(transactionManager, memberRepository);
     }
 
     @AfterEach
@@ -63,8 +63,8 @@ class MemberServiceV2Test {
         log.info("END TX");
 
         //then
-        Member findMemberA = memberRepository.findById(dataSource.getConnection(), memberA.getMemberId());
-        Member findMemberB = memberRepository.findById(dataSource.getConnection(), memberB.getMemberId());
+        Member findMemberA = memberRepository.findById(memberA.getMemberId());
+        Member findMemberB = memberRepository.findById(memberB.getMemberId());
 
         assertThat(findMemberA.getMoney()).isEqualTo(8000);
         assertThat(findMemberB.getMoney()).isEqualTo(12000);
@@ -84,8 +84,8 @@ class MemberServiceV2Test {
                 .isInstanceOf(IllegalStateException.class);
 
         //then
-        Member findMemberA = memberRepository.findById(dataSource.getConnection(), memberA.getMemberId());
-        Member findMemberB = memberRepository.findById(dataSource.getConnection(), memberEx.getMemberId());
+        Member findMemberA = memberRepository.findById(memberA.getMemberId());
+        Member findMemberB = memberRepository.findById(memberEx.getMemberId());
 
         assertThat(findMemberA.getMoney()).isEqualTo(10000);
         assertThat(findMemberB.getMoney()).isEqualTo(10000);
