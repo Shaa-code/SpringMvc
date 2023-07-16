@@ -142,4 +142,9 @@ public class MemberRepositoryV3 {
         return con;
     }
 
+    static class RuntimeSQLException extends RuntimeException{
+        RuntimeSQLException(Throwable cause){
+            super(cause);
+        }
+    }
 }
