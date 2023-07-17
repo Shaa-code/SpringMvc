@@ -1,7 +1,7 @@
 package hello.jdbc.service;
 
 import hello.jdbc.domain.Member;
-import hello.jdbc.repository.*;
+import hello.jdbc.repository.MemberRepositoryV3;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
@@ -20,19 +20,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
-
+/**
+ * 트랜잭션 - 커넥션 파라미터 전달 방식 동기화
+ */
 @Slf4j
 @SpringBootTest
-class MemberServiceV4Test {
+class MemberServiceV3_4Test {
 
     public static final String MEMBER_A = "memberA";
     public static final String MEMBER_B = "memberB";
     public static final String MEMBER_EX = "ex";
 
     @Autowired
-    private MemberRepository memberRepository;
+    private MemberRepositoryV3 memberRepository;
     @Autowired
-    private MemberServiceV4 memberService;
+    private MemberServiceV3_3 memberService;
 
     @TestConfiguration
     static class TestConfig{
@@ -44,15 +46,13 @@ class MemberServiceV4Test {
         }
 
         @Bean
-        MemberRepository memberRepository(){
-//            return new MemberRepositoryV4_1(dataSource);
-//            return new MemberRepositoryV4_2(dataSource);
-            return new MemberRepositoryV5(dataSource);
+        MemberRepositoryV3 memberRepositoryV3(){
+            return new MemberRepositoryV3(dataSource);
         }
 
         @Bean
-        MemberServiceV4 memberServiceV4(){
-            return new MemberServiceV4(memberRepository());
+        MemberServiceV3_3 memberServiceV3_3(){
+            return new MemberServiceV3_3(memberRepositoryV3());
         }
     }
 
@@ -66,14 +66,14 @@ class MemberServiceV4Test {
 //    }
 
     @AfterEach
-    void after() {
+    void after() throws SQLException {
         memberRepository.delete(MEMBER_A);
         memberRepository.delete(MEMBER_B);
         memberRepository.delete(MEMBER_EX);
     }
 
     @Test
-    void AopCheck() {
+    void AopCheck(){
         log.info("memberService class = {}", memberService.getClass());
         log.info("memberRepository class = {}", memberRepository.getClass());
         Assertions.assertThat(AopUtils.isAopProxy(memberService)).isTrue();
