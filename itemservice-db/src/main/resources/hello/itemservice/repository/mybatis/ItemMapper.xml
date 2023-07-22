@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hello.itemservice.repository.mybatis.ItemMapper">
+
+        <insert id="save" useGeneratedKeys="true" keyProperty="id">
+            insert into item (item_name, price, quantity)
+            values (#{itemName}, #{price}, #{quantity})
+        </insert>
+        <!--객체에서 getItemName(), getPrice(), getQuantity()를 해서 꺼내오는 것이다.-->
+
+        <update id="update">
+            update item
+            set item_name=#{updateParam.itemName},
+                price=#{updateParam.price},
+                quantity=#{updateParam.quantity}
+            where id = #{id}
+        </update>
+        <!--save와 다르게 updateParam을 해주는 이유는 파라미터가 2개이상이면 구체적으로 명시를 해줘야 하기 때문이다.-->
+
+        <select id="findById" resultType="Item">
+            select id, item_name, price, quantity
+            from item
+            where id = #{id}
+        </select>
+        <!--원래 resultType="hello.itemservice.domain.Item"으로 해줘야한다.-->
+        <!--그런데 config에서 mybatis.type-aliases-package=hello.itemservice.domain을 해주었기 때문에-->
+        <!--resultType에 Item만 적어도 잘 작동한다.-->
+
+
+        <select id="findAll">
+            select id, item_name, price, quantity
+            from item
+                <where>
+                    <if test="itemName != null and itemName != ''">
+                        and item_name like concat('%', #{itemName}, '%')
+                    </if>
+                    <if test="maxPrice != null">
+                        and price &lt;= #{maxPrice}
+                        <![CDATA[
+                        and price <= #{maxPrice}]]>
+                    </if>
+                    <!--xml에서 '<' 는 &lt로 써야한다. 이상을 표시하려면 &lt;=이렇게 한다.-->
+                </where>
+
+        </select>
+
+</mapper>

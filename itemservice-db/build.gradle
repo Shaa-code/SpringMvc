@@ -25,6 +25,9 @@ dependencies {
 	//JdbcTemplate
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
+	//MyBatis
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
+	//버전이 붙는걸 볼 수 있는데, Spring이 자체적으로 관리하지 않는 라이브러리는 버전이 붙는다.
 
 	//H2 Database
 	runtimeOnly 'com.h2database:h2'
