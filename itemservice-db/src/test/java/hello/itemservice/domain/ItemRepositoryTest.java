@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,20 +35,21 @@ class ItemRepositoryTest {
 //    void beforeEach(){
 //        status = transactionManager.getTransaction(new DefaultTransactionDefinition());
 //    }
-
-    @AfterEach
-    void afterEach() {
-//        //트랜잭션 롤백
-//        transactionManager.rollback(status);
-
-        //MemoryItemRepository 의 경우 제한적으로 사용
-        if (itemRepository instanceof MemoryItemRepository) {
-            ((MemoryItemRepository) itemRepository).clearStore();
-        }
-        //itemRepository 인터페이스에는 clearStore()가 없다. 그래서 위처럼 쓰는거다.
-    }
+//
+//    @AfterEach
+//    void afterEach() {
+////        //트랜잭션 롤백
+////        transactionManager.rollback(status);
+//
+//        //MemoryItemRepository 의 경우 제한적으로 사용
+//        if (itemRepository instanceof MemoryItemRepository) {
+//            ((MemoryItemRepository) itemRepository).clearStore();
+//        }
+//        //itemRepository 인터페이스에는 clearStore()가 없다. 그래서 위처럼 쓰는거다.
+//    }
 
     @Test
+    @Commit
     void save() {
         //given
         Item item = new Item("itemA", 10000, 10);
@@ -109,5 +111,6 @@ class ItemRepositoryTest {
         List<Item> result = itemRepository.findAll(new ItemSearchCond(itemName, maxPrice));
         assertThat(result).containsExactly(items);
     }
+
 
 }
