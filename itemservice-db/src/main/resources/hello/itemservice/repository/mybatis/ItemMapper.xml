@@ -28,7 +28,7 @@
         <!--resultType에 Item만 적어도 잘 작동한다.-->
 
 
-        <select id="findAll">
+        <select id="findAll" resultType="Item">
             select id, item_name, price, quantity
             from item
                 <where>

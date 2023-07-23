@@ -16,8 +16,9 @@ import javax.sql.DataSource;
 //@Import(MemoryConfig.class)
 //@Import(JdbcTemplateV1Config.class)
 //@Import(JdbcTemplateV2Config.class)
+//@Import(JdbcTemplateV3Config.class)
 @Slf4j
-@Import(JdbcTemplateV3Config.class)
+@Import(MyBatisConfig.class)
 @SpringBootApplication(scanBasePackages = "hello.itemservice.web")
 public class ItemServiceApplication {
 
@@ -44,7 +45,4 @@ public class ItemServiceApplication {
 //		return dataSource;
 //		//이렇게 하면 JVM내에 DB를 만들고 여기에 데이터를 쌓는다.
 //	}
-
-
-
 }

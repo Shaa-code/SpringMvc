@@ -38,8 +38,8 @@ class ItemRepositoryTest {
 //
 //    @AfterEach
 //    void afterEach() {
-////        //트랜잭션 롤백
-////        transactionManager.rollback(status);
+//        //트랜잭션 롤백
+//        transactionManager.rollback(status);
 //
 //        //MemoryItemRepository 의 경우 제한적으로 사용
 //        if (itemRepository instanceof MemoryItemRepository) {
@@ -49,7 +49,6 @@ class ItemRepositoryTest {
 //    }
 
     @Test
-    @Commit
     void save() {
         //given
         Item item = new Item("itemA", 10000, 10);
