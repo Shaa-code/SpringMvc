@@ -1,13 +1,23 @@
 package hello.itemservice.domain;
 
+import hello.itemservice.repository.ItemRepository;
 import lombok.Data;
 
+import javax.persistence.*;
+
 @Data
+@Entity
+//@Table(name = "item") 객체명과 같으면 생략이 가능하다.
 public class Item {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "item_name", length = 10)
     private String itemName;
+
+
     private Integer price;
     private Integer quantity;
 
