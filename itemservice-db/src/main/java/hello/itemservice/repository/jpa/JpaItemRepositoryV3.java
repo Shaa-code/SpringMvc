@@ -25,7 +25,7 @@ import static hello.itemservice.domain.QItem.item;
 public class JpaItemRepositoryV3 implements ItemRepository {
 
     private final EntityManager em;
-    private final JPAQuer yFactory query;
+    private final JPAQueryFactory query;
 
     public JpaItemRepositoryV3(EntityManager em){
         this.em = em;
