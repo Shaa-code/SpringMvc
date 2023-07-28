@@ -16,7 +16,7 @@ public class MemberRepository {
 
     private final EntityManager em;
 
-    @Transactional//(propagation = Propagation.REQUIRES_NEW) Default 이다.
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void save(Member member){
         log.info("member 저장");
         em.persist(member);
