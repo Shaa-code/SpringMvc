@@ -3,6 +3,7 @@ package hello.springtx.propagation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -16,7 +17,7 @@ public class LogRepository {
     //@PersistenceContext 원래 이거 넣어줘야했는데, 스프링이 버전업이 되면서 따로 안 넣어줘도 알아서 주입해준다.
     private final EntityManager em;
 
-//    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void save(Log logMessage){
         log.info("log 저장");
         em.persist(logMessage);
