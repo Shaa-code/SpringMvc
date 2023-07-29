@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2"
+             xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+    <persistence-unit name="hello">
+        <properties>
+            <!-- 필수 속성 -->
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+            <property name="javax.persistence.jdbc.user" value="sa"/>
+            <property name="javax.persistence.jdbc.password" value="7983"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/test"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+
+            <!-- 옵션 -->
+            <property name="hibernate.show_sql" value="true"/>
+            <!-- 로그 전체를 보여준다. -->
+            <property name="hibernate.format_sql" value="true"/>
+            <!-- pretty 한 포맷으로 형식으로 뽑아준다. -->
+            <property name="hibernate.use_sql_comments" value="true"/>
+            <!-- /* insert hellojpa.Member */ 처럼 왜 이 쿼리가 발생했는지 알려준다. -->
+
+            <!--<property name="hibernate.hbm2ddl.auto" value="create" />-->
+
+            <!-- JDK 11 환경에서 JPA를 실행시키면 에러가 생기므로 별도로 추가-->
+        </properties>
+    </persistence-unit>
+</persistence>
