@@ -18,8 +18,7 @@
             <!-- pretty 한 포맷으로 형식으로 뽑아준다. -->
             <property name="hibernate.use_sql_comments" value="true"/>
             <!-- /* insert hellojpa.Member */ 처럼 왜 이 쿼리가 발생했는지 알려준다. -->
-
-            <!--<property name="hibernate.hbm2ddl.auto" value="create" />-->
+            <property name="hibernate.hbm2ddl.auto" value="create" />
 
             <!-- JDK 11 환경에서 JPA를 실행시키면 에러가 생기므로 별도로 추가-->
         </properties>
