@@ -6,7 +6,6 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.util.List;
 
-
 public class JpaMain {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
@@ -35,18 +34,18 @@ public class JpaMain {
 
             Member member = new Member();
             member.setUsername("member1");
-            member.setTeam(team);
+            member.changeTeam(team);
             em.persist(member);
 
-            em.flush();
-            em.clear();
+//            em.flush();
+//            em.clear();
 
-            Team findTeam = em.find(Team.class, team.getId());
-            List<Member> members = findTeam.getMembers();
+            Team findTeam = em.find(Team.class, team.getId()); //1차 캐시에 값이 있음.
+            List<Member> members = findTeam.getMembers(); // members는 따로 안넣어줘서 값이 안나온다.
 
-            for (Member m : members) {
-                System.out.println("m.getUsername() = " + m.getUsername());
-            }
+            System.out.println("==============");
+            System.out.println("members = " + findTeam);
+            System.out.println("==============");
 
             tx.commit();
         }catch (Exception e){
