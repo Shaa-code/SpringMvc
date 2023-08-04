@@ -1,9 +1,6 @@
 package jpabook.jpashop.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Item {
@@ -13,8 +10,13 @@ public class Item {
     private Long id;
 
     private String name;
-    private int price; //왜 Interger 안쓰지?
+
+    private int price;
+
     private int stockQuantity;
+
+    @OneToMany(mappedBy = "item")
+    private OrderItem orderItem;
 
     public Long getId() {
         return id;

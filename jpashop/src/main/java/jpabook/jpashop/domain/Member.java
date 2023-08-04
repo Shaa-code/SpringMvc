@@ -19,6 +19,9 @@ public class Member {
 
     private String zipcode;
 
+    @OneToMany(mappedBy = "member")
+    private Order order;
+
     public Long getId() {
         return id;
     }

@@ -1,10 +1,7 @@
 package jpabook.jpashop.domain;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class OrderItem {
@@ -13,11 +10,12 @@ public class OrderItem {
     @Column(name = "ORDER_ITEM_ID")
     private int id;
 
-    @Column(name = "ORDER_ID")
-    private int orderId;
+    @ManyToOne
+    @JoinColumn(name="ORDER_ID")
+    private Order order;
 
-    @Column(name = "ITEM_ID")
-    private int itemId;
+    @ManyToOne
+    private Item item;
 
     private int orderPrice;
     private int count;
@@ -29,22 +27,6 @@ public class OrderItem {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
-
-    public int getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
     }
 
     public int getOrderPrice() {
