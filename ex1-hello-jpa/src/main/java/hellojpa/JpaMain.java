@@ -16,36 +16,16 @@ public class JpaMain {
         tx.begin();
 
         try{
-            /*
-            // 테이블 중심 설계시 코드
-            Team team = new Team();
-            team.setName("TeamA");
-            em.persist(team);
-
             Member member = new Member();
             member.setUsername("member1");
-            member.setTeamId(team.getId());
+
             em.persist(member);
-             */
 
             Team team = new Team();
-            team.setName("TeamA");
+            team.setName("teamA");
+            team.getMembers().add(member);
+
             em.persist(team);
-
-            Member member = new Member();
-            member.setUsername("member1");
-            member.changeTeam(team);
-            em.persist(member);
-
-//            em.flush();
-//            em.clear();
-
-            Team findTeam = em.find(Team.class, team.getId()); //1차 캐시에 값이 있음.
-            List<Member> members = findTeam.getMembers(); // members는 따로 안넣어줘서 값이 안나온다.
-
-            System.out.println("==============");
-            System.out.println("members = " + findTeam);
-            System.out.println("==============");
 
             tx.commit();
         }catch (Exception e){
