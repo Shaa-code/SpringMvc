@@ -4,7 +4,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.List;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -18,14 +17,24 @@ public class JpaMain {
         try{
             Member member = new Member();
             member.setUsername("member1");
-
             em.persist(member);
 
-            Team team = new Team();
-            team.setName("teamA");
-            team.getMembers().add(member);
+            Team team1 = new Team();
+            team1.setName("teamA");
 
-            em.persist(team);
+            //Team 객체의 Member List로 쿼리
+            team1.getMembers().add(member);
+
+            em.persist(team1);
+
+            Team team2 = new Team();
+            team2.setName("teamB");
+            em.persist(team2);
+
+            //Member 객체의 Team으로 쿼리
+            member.changeTeam(team2);
+
+            em.persist(member);
 
             tx.commit();
         }catch (Exception e){
