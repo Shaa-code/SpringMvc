@@ -1,6 +1,8 @@
 package jpabook.jpashop.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Item {
@@ -14,6 +16,9 @@ public class Item {
     private int price;
 
     private int stockQuantity;
+
+    @ManyToMany(mappedBy= "items")
+    private List<Category> categorys = new ArrayList<>();
 
     @OneToMany(mappedBy = "item")
     private OrderItem orderItem;

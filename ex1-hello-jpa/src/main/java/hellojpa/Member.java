@@ -1,6 +1,8 @@
 package hellojpa;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Member {
@@ -9,6 +11,10 @@ public class Member {
     private Long id;
 
     private String username;
+
+    @ManyToMany
+    @JoinTable(name = "MEMBER_PRODUCT")
+    private List<Product> products = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "TEAM_ID")
@@ -37,5 +43,6 @@ public class Member {
         this.team = team;
         team.getMembers().add(this);
     }
+
 
 }

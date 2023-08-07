@@ -15,26 +15,14 @@ public class JpaMain {
         tx.begin();
 
         try{
-            Member member = new Member();
-            member.setUsername("member1");
-            em.persist(member);
 
-            Team team1 = new Team();
-            team1.setName("teamA");
+            Movie movie = new Movie();
+            movie.setDirector("aaaa");
+            movie.setActor("bbbb");
+            movie.setName("바람과 함께 사라지다.");
+            movie.setPrice(1000);
 
-            //Team 객체의 Member List로 쿼리
-            team1.getMembers().add(member);
-
-            em.persist(team1);
-
-            Team team2 = new Team();
-            team2.setName("teamB");
-            em.persist(team2);
-
-            //Member 객체의 Team으로 쿼리
-            member.changeTeam(team2);
-
-            em.persist(member);
+            em.persist(movie);
 
             tx.commit();
         }catch (Exception e){
