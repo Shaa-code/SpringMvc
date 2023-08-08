@@ -3,8 +3,9 @@ package hellojpa;
 import javax.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Item {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@DiscriminatorColumn
+public abstract class Item {
 
     @Id
     @GeneratedValue
@@ -38,11 +39,4 @@ public class Item {
         this.price = price;
     }
 
-    public int getDtype() {
-        return dtype;
-    }
-
-    public void setDtype(int dtype) {
-        this.dtype = dtype;
-    }
 }
