@@ -16,13 +16,9 @@ public class Member extends BaseEntity{
     @JoinTable(name = "MEMBER_PRODUCT")
     private List<Product> products = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "TEAM_ID")
     private Team team;
-
-    @OneToOne
-    private Locker locker;
-
 
     public Long getId() {
         return id;
@@ -61,11 +57,4 @@ public class Member extends BaseEntity{
         this.team = team;
     }
 
-    public Locker getLocker() {
-        return locker;
-    }
-
-    public void setLocker(Locker locker) {
-        this.locker = locker;
-    }
 }

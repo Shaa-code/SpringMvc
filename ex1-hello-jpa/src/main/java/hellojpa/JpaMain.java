@@ -1,9 +1,7 @@
 package hellojpa;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
+import java.util.List;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -15,28 +13,41 @@ public class JpaMain {
         tx.begin();
 
         try{
-            Member member = em.find(Member.class, 1L);
-            printMemberAndTeam(member);
-            printMember(member);
+            Member member1 = new Member();
+            member1.setUsername("member1");
+            em.persist(member1);
+
+            Team team = new Team();
+            team.setName("teamA");
+            em.persist(team);
+
+            member1.setTeam(team);
+
+            Member member2 = new Member();
+            member2.setUsername("member2");
+            em.persist(member2);
+
+            Team team2 = new Team();
+            team2.setName("teamB");
+            em.persist(team2);
+
+            member2.setTeam(team2);
+
+            em.flush();
+            em.clear();
+
+            Member member = em.find(Member.class, member1.getId());
+            System.out.println("team = " + member.getTeam().getClass());
+
+
 
             tx.commit();
         }catch (Exception e){
             tx.rollback();
+            e.printStackTrace();
         }finally{
             em.close();
         }
         emf.close();
-    }
-
-    private static void printMember(Member member) {
-        System.out.println("member = " + member.getUsername());
-    }
-
-    private static void printMemberAndTeam(Member member) {
-        String username = member.getUsername();
-        System.out.println("username = " + username);
-
-        Team team = member.getTeam();
-        System.out.println("team = " + team.getName());
     }
 }
