@@ -23,6 +23,14 @@ public class JpaMain {
 
             em.persist(parent);
 
+            em.flush();
+            em.clear();
+
+            em.find(Parent.class, parent.getId());
+
+            Parent findParent = em.find(Parent.class, parent.getId());
+            findParent.getChildList().remove(0);
+
             tx.commit();
         }catch (Exception e){
             tx.rollback();
