@@ -1,7 +1,6 @@
 package hellojpa;
 
 import javax.persistence.*;
-import java.util.List;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -13,12 +12,18 @@ public class JpaMain {
         tx.begin();
 
         try{
-            Member member = new Member();
-            member.setUsername("hello");
-            member.setHomeAddress(new Address("city", "street", "zipcode"));
-            member.setWorkPeriod(new Period());
 
-            em.persist(member);
+            Address address = new Address("city", "street", "10000");
+
+            Member member1 = new Member();
+            member1.setUsername("member1");
+            member1.setHomeAddress(address);
+            em.persist(member1);
+
+            Member member2 = new Member();
+            member2.setUsername("member2");
+            member2.setHomeAddress(address);
+            em.persist(member2);
 
             tx.commit();
         }catch (Exception e){
