@@ -13,17 +13,19 @@ public class JpaMain {
 
         try{
 
-            Address address = new Address("city", "street", "10000");
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setHomeAddress(new Address("homeCity", "street","10000"));
 
-            Member member1 = new Member();
-            member1.setUsername("member1");
-            member1.setHomeAddress(address);
-            em.persist(member1);
+            member.getFavoriteFoods().add("치킨");
+            member.getFavoriteFoods().add("족발");
+            member.getFavoriteFoods().add("피자");
 
-            Member member2 = new Member();
-            member2.setUsername("member2");
-            member2.setHomeAddress(address);
-            em.persist(member2);
+            member.getAddressHistory().add(new Address("old1", "street1", "10000"));
+            member.getAddressHistory().add(new Address("old2", "street2", "20000"));
+
+            em.persist(member);
+
 
             tx.commit();
         }catch (Exception e){
